@@ -15,7 +15,7 @@ TransRouter 是一个实时语音翻译工具，支持中英文双向翻译。�
 ## 系统要求
 
 - Python 3.8 或更高版本
-- macOS/Linux/Windows
+- 只支持Mac
 - BlackHole 虚拟音频设备（用于音频路由）
 - 稳定的网络连接
 - Azure Speech Services 账号
