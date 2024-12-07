@@ -6,4 +6,5 @@ recordings/
 synthesis/
 *.wav 
 
+log.txt
 .env
