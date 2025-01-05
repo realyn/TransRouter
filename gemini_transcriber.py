@@ -147,22 +147,3 @@ class GeminiTranscriber:
         except Exception as e:
             self.logger.error(f"Gemini 转录错误: {e}")
             return None
-
-    async def get_result(self, timeout: float = 0.5) -> str:
-        """
-        从结果队列获取转录结果
-
-        Args:
-            timeout: 超时时间（秒）
-
-        Returns:
-            str: 转录结果，超时返回 None
-        """
-        try:
-            result = await asyncio.wait_for(
-                self.result_queue.get(),
-                timeout=timeout
-            )
-            return result
-        except asyncio.TimeoutError:
-            return None

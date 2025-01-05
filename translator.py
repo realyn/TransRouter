@@ -54,7 +54,6 @@ class AudioTranslator:
 
         # 设备设置
         self.input_device = None  # 使用系统默认麦克风
-        self.output_device = None  # "BlackHole 2ch"
 
         # 初始化 Gemini 转录器
         self.transcriber = GeminiTranscriber()
