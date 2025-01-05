@@ -1,32 +1,31 @@
 # TransRouter
 
-TransRouter 是一个实时语音翻译工具，支持中英文双向翻译。它使用 Azure Speech Services 进行语音识别，OpenAI GPT-4 进行翻译，可以直接与 Zoom 等会议软件集成。
+TransRouter 是一个实时语音翻译工具，使用 Google Gemini 大模型进行中英文实时翻译。它可以直接与 Zoom 等会议软件集成，实现实时的语音翻译。
 
 ## 功能特点
 
-- 实时语音识别和翻译
+- 实时语音翻译
 - 中英文双向翻译
 - 自动语音合成
-- 支持一键切换识别语言
 - 与 Zoom 等会议软件无缝集成
 - 低延迟的流式处理
 - 自动保存原始录音和合成音频
+- 完整的日志记录
 
 ## 系统要求
 
 - Python 3.8 或更高版本
-- 只支持Mac
+- macOS 系统
 - BlackHole 虚拟音频设备（用于音频路由）
 - 稳定的网络连接
-- Azure Speech Services 账号
-- OpenAI API 密钥
+- Google Gemini API 密钥
 
 ## 安装步骤
 
 1. 克隆仓库：
 
 ```bash
-git clone https://github.com/yourusername/TransRouter.git
+git clone https://github.com/notedit/TransRouter.git
 cd TransRouter
 ```
 
@@ -52,10 +51,7 @@ pip install -r requirements.txt
    - 填入您的 API 密钥：
 
 ```bash
-AZURE_SPEECH_KEY=your_azure_speech_key
-AZURE_SPEECH_REGION=your_azure_region
-OPENAI_API_KEY=your_openai_api_key
-OPENAI_API_BASE=your_openai_api_base # 可选，如果使用自定义 API 端点
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
 
@@ -95,8 +91,15 @@ python transrouter.py
 3. 音频文件：
    - 原始录音保存在 `recordings` 目录
    - 合成语音保存在 `synthesis` 目录
-   - 文件格式：16kHz 采样率，16bit 深度，单声道 WAV
+   - 日志文件保存在 `logs` 目录
   
+
+## 技术实现
+
+- 音频采集：使用 sounddevice 进行实时音频采集
+- 语音翻译：使用 Google Gemini 大模型进行音频翻译
+- 音频输出：使用异步音频流实现低延迟播放
+- 日志记录：使用 Python logging 模块进行完整日志记录
 
 ## 常见问题
 
@@ -105,37 +108,25 @@ python transrouter.py
    - 运行程序时查看打印的设备列表
    - 确认系统音频设置中可以看到虚拟设备
 
-2. 识别不准确：
-   - 确保使用正确的语言模式
-   - 检查麦克风音量和环境噪音
-   - 说话时保持适当距离和语速
-
-3. 翻译延迟：
+2. 翻译延迟：
    - 检查网络连接
    - 可能是 API 调用限制
-   - 尝试调整 VAD 超时设置
+   - 检查音频队列长度
 
-4. 音频问题：
-   - 确认采样率设置（16kHz）
+3. 音频问题：
+   - 确认采样率设置（输入16kHz，输出24kHz）
    - 检查音频设备路由
    - 验证 Zoom 音频设置
-
-## 开发说明
-
-- 语音识别：使用 Azure Speech Services 的流式识别
-- 文本翻译：使用 OpenAI GPT-4 模型
-- 语音合成：使用 Azure Speech Services 的神经网络语音
-- 音频处理：使用 sounddevice 和 numpy 处理音频流
 
 ## 注意事项
 
 1. API 使用：
    - 注意 API 调用限制和计费
    - 保护好 API 密钥
-   - 建议使用 API 代理
 
 2. 音频设置：
-   - 使用 16kHz 采样率
+   - 输入采样率 16kHz
+   - 输出采样率 24kHz
    - 单声道音频
    - PCM 16bit 格式
 
